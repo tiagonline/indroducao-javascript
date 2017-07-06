@@ -7,11 +7,12 @@ botaoAdicionar.addEventListener("click", function(event) {
   var form = document.querySelector("#form-adiciona");
   //busca o valor dos inputs e guarda na variável
   var paciente = obtemPacienteDoFormulario(form);
+  //retorna a tr
   var pacienteTr = montaTr(paciente);
-
   //adicionando o paciente na tabela
   var tabela = document.querySelector("#tabela-pacientes");
   tabela.appendChild(pacienteTr);
+  form.reset();
 });
 // dentro da função possui um objeto do tipo paciente
 function obtemPacienteDoFormulario(form) {
@@ -26,28 +27,20 @@ function obtemPacienteDoFormulario(form) {
 }
 
 function montaTr(paciente){
-  //cria um tr que é o paciente
   var pacienteTr = document.createElement("tr");
+  pacienteTr.classList.add("paciente");
 
-  //cria vários td's para cada dado do usuário
-  var nomeTd = document.createElement("td");
-  var pesoTd = document.createElement("td");
-  var alturaTd = document.createElement("td");
-  var gorduraTd = document.createElement("td");
-  var imcTd = document.createElement("td");
-  //coloca os valores extraíros do form dentro de cada td
-  nomeTd.textContent = paciente.nome;
-  pesoTd.textContent = paciente.peso;
-  alturaTd.textContent = paciente.altura;
-  gorduraTd.textContent = paciente.gordura;
-  imcTd.textContent = paciente.imc;
-  //adicionar td dentro de tr
-  pacienteTr.appendChild(nomeTd);
-  console.log(nomeTd);
-  pacienteTr.appendChild(pesoTd);
-  pacienteTr.appendChild(alturaTd);
-  pacienteTr.appendChild(gorduraTd);
-  pacienteTr.appendChild(imcTd);
-
+    pacienteTr.appendChild(montaTd(paciente.nome, "info-nome"));
+    pacienteTr.appendChild(montaTd(paciente.peso, "info-peso"));
+    pacienteTr.appendChild(montaTd(paciente.altura, "info-altura"));
+    pacienteTr.appendChild(montaTd(paciente.gordura, "info-gordura"));
+    pacienteTr.appendChild(montaTd(paciente.imc, "info-imc"));
   return pacienteTr;
+}
+
+function montaTd(dado, classe){
+    var td = document.createElement("td");
+    td.textContent = dado;
+    td.classList.add(classe);
+  return td;
 }
